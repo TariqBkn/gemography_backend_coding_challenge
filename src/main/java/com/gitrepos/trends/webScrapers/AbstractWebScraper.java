@@ -10,21 +10,26 @@ import com.gitrepos.trends.models.IRepository;
  * @author bkn_tariq
  */
 public abstract class AbstractWebScraper {
-	private String url;
-	public AbstractWebScraper(String url) {
-		validateTargetUrl(url);
-		this.url=url;
-	} 
+	protected String url;
+	 
+	protected abstract void setUrl();
 
-	// Will contain the actual steps of scraping the web page corresponding 
-	// to the url.
-	protected abstract List<IRepository> getRepositoriesFromWebPage();
+	// Will contain the actual steps of scraping the web page corresponding to the url.
+	protected abstract List<IRepository> extractRepositoriesFromWebPage();
 	
-	private void validateTargetUrl(String url) {
+	// Exposed to client classes
+	public List<IRepository> getRepositories() {
+		validateUrl(url);
+		return extractRepositoriesFromWebPage();
+	}
+	
+	
+	private void validateUrl(String url) {
 		String[] schemes = {"http","https"}; //removed FTP which is included by default.
 		UrlValidator urlValidator = new UrlValidator(schemes);
 		if(!urlValidator.isValid(url)) {
 			throw new IllegalArgumentException("Invalid URL value");
 		}
 	}
+
 }

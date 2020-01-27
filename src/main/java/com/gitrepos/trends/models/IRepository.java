@@ -1,6 +1,6 @@
 package com.gitrepos.trends.models;
 
-import java.util.List;
+import java.util.Optional;
 /**
  * This interface represents a generic Git repository
  * @author bkn_tariq
@@ -10,11 +10,11 @@ public interface IRepository {
 	
 	public String getRepositoryName();
 	
-	// Multiple languages can be used in a single repository
-	public List<String> getProgrammingLanguage();
+	// Some repositories don't contain code (eg. only a README.md)
+	public Optional<String> getProgrammingLanguage();
 	
-	// Multiple frameworks can be used in a single repository
-	public List<String> getUsedFrameworkName();
+	public int getTotalStarsNumber();
 	
-	public int getStarsCount();
+	public int getStarsNumberDuringSelectedDateRange();
+	
 }
