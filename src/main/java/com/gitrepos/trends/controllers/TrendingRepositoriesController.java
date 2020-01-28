@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gitrepos.trends.IModels.ICodeRepository;
+import com.gitrepos.trends.IModels.IRepository;
 import com.gitrepos.trends.webScrapers.AbstractWebScraper;
 import com.gitrepos.trends.webScrapers.DateRange;
 
@@ -85,7 +86,37 @@ public class TrendingRepositoriesController {
 									.count();
 			return numberOfReposUsingLanguage;
 		}
-		
+	
+
+		// List repositories using a given language
+		@GetMapping(value = "/languages/{language}")
+		public ResponseEntity<List<IRepository>> listRepositoriesUsingLanguage(@RequestParam(defaultValue="") String since, @PathVariable String language) {
+				HttpHeaders headers = new HttpHeaders();
+				try {
+					setDateRange(since);
+					List<IRepository> repositoriesUsingLanguage = getRepositoriesUsingLanguage(language);
+					
+			        headers.add("Message", "Repositories using given language");
+			    
+			        return ResponseEntity.accepted().headers(headers).body(repositoriesUsingLanguage);
+				} catch (IOException e) {
+					headers.add("Message", "ERROR: can't the list of repositories using specified language");
+			        return ResponseEntity.accepted().headers(headers).body(null);
+				}
+			}
+
+		private List<IRepository> getRepositoriesUsingLanguage(String language) throws IOException {
+			List<IRepository> repositoriesUsingLanguage = webScraper
+									.getRepositories()
+									.stream()
+									.filter(repo -> repo instanceof ICodeRepository )
+									.map(ICodeRepository.class::cast)
+									.filter(repo -> repo.getProgrammingLanguage().equalsIgnoreCase(language))
+									.collect(Collectors.toList());
+			return repositoriesUsingLanguage;
+		}
+			
+			
 		
 	private void setDateRange(String since) {
 		if(since.equalsIgnoreCase("weekly")) {
