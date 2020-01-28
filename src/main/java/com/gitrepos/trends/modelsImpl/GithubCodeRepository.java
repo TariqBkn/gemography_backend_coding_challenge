@@ -10,7 +10,7 @@ public class GithubCodeRepository extends GithubPlainTextRepository implements I
 	
 	public GithubCodeRepository(String repositoryName, String description, String programmingLanguage, int totalStarsNumber,
 			int starsNumberDuringSelectedDateRange) {
-		super(repositoryName, description, programmingLanguage, totalStarsNumber, starsNumberDuringSelectedDateRange);
+		super(repositoryName, description, totalStarsNumber, starsNumberDuringSelectedDateRange);
 		this.programmingLanguage=programmingLanguage;
 	}
 

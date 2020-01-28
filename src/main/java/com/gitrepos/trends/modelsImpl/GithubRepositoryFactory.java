@@ -22,12 +22,12 @@ public class GithubRepositoryFactory implements IRepositoryFactory{
 		int totalStarsNumberValue=Integer.valueOf(totalStarsNumber.replace(",", ""));
 		int starsNumberDuringSelectedDateRangeValue=Integer.valueOf(starsNumberDuringSelectedDateRange.replace(",", ""));
 		
-		if(programmingLanguage.isBlank()) {
-			return new GithubCodeRepository(repositoryName, description,programmingLanguage,
+		if(programmingLanguage.equals("")) {
+			return new GithubPlainTextRepository(repositoryName, description,
 			totalStarsNumberValue, starsNumberDuringSelectedDateRangeValue);
 		}else {
-			return new GithubPlainTextRepository(repositoryName, description, programmingLanguage,
-				totalStarsNumberValue, starsNumberDuringSelectedDateRangeValue);
+			return new GithubCodeRepository(repositoryName, description,programmingLanguage,
+					totalStarsNumberValue, starsNumberDuringSelectedDateRangeValue);
 		}
 	}
 

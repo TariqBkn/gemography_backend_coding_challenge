@@ -24,6 +24,7 @@ public abstract class AbstractWebScraper {
 		return extractRepositoriesFromWebPage();
 	}
 	
+	public abstract void setDateRange(DateRange dateRange);
 	
 	private void validateUrl(String url) {
 		String[] schemes = {"http","https"}; //removed FTP which is included by default.

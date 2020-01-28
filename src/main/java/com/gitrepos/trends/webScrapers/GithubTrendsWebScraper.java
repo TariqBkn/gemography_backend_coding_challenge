@@ -26,6 +26,7 @@ public class GithubTrendsWebScraper extends AbstractWebScraper {
 		url=GITHUB_URL+"?since="+dateRange;
 	}
 	
+	@Override
 	public void setDateRange(DateRange dateRange) {
 		this.dateRange=dateRange;
 		//Update Url each time date range changes
@@ -45,8 +46,9 @@ public class GithubTrendsWebScraper extends AbstractWebScraper {
 			String starsTodayText = row.select(".float-sm-right.d-inline-block").text();//select("aricle").text()
 			String programmingLanguage = row.select(".mr-3.ml-0.d-inline-block").text();
 			String TotalStarsNumber = row.select("a.mr-3.d-inline-block.muted-link:nth-of-type(1)").text();
-				
-			extractedRepositories.add(githubRepositoryFactory.create(repoTitle,description,starsTodayText,programmingLanguage,TotalStarsNumber));	
+	
+			
+			extractedRepositories.add(githubRepositoryFactory.create(repoTitle,description,programmingLanguage,TotalStarsNumber, starsTodayText));	
 		}
 		return extractedRepositories;
 	}
