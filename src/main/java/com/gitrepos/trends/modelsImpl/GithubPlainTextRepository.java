@@ -9,7 +9,7 @@ public class GithubPlainTextRepository implements IRepository {
 	protected final int starsNumberDuringSelectedDateRange;
 	protected final String description;
 
-	public GithubPlainTextRepository(String repositoryName, String description, String programmingLanguage, int totalStarsNumber,
+	public GithubPlainTextRepository(String repositoryName, String description, int totalStarsNumber,
 			int starsNumberDuringSelectedDateRange) {
 		super();
 		this.repositoryName = repositoryName;
