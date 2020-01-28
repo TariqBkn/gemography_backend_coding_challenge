@@ -1,7 +1,11 @@
 package com.gitrepos.trends.controllers;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,7 +91,6 @@ public class TrendingRepositoriesController {
 			return numberOfReposUsingLanguage;
 		}
 	
-
 		// List repositories using a given language
 		@GetMapping(value = "/languages/{language}")
 		public ResponseEntity<List<IRepository>> listRepositoriesUsingLanguage(@RequestParam(defaultValue="") String since, @PathVariable String language) {
@@ -116,7 +119,42 @@ public class TrendingRepositoriesController {
 			return repositoriesUsingLanguage;
 		}
 			
+
+		// Get Language popularity over the 25 trending repositories
+		@GetMapping(value = "/languages/popularity")
+		public ResponseEntity<Map<String, Long>> getLanguagePopularity(@RequestParam(defaultValue="") String since) {
+			HttpHeaders headers = new HttpHeaders();
+			try {
+				setDateRange(since);
+				Map<String, Long> laguagesByRank = sortLanguagesByRepositories(getLanguagesByNumberOfRepositories());
+
+		        headers.add("Message", "Language popularity");
+		        
+		        return ResponseEntity.accepted().headers(headers).body(laguagesByRank);
+			} catch (IOException e) {
+				headers.add("Message", "ERROR: can't get the list of repositories using specified language");
+		        return ResponseEntity.accepted().headers(headers).body(null);
+			}
+		}
+
+		private Map<String, Long> sortLanguagesByRepositories(Map<String, Long> languagesByNumberOfRepositories) {
+			return languagesByNumberOfRepositories.entrySet()
+			        .stream()
+			        .sorted(Collections.reverseOrder(Entry.comparingByValue()))
+			        .collect(Collectors.toMap(Entry::getKey, Entry::getValue, (e1,  e2) -> e1, LinkedHashMap::new));
+		}
+
+		private  Map<String, Long> getLanguagesByNumberOfRepositories() throws IOException {
+			Map<String,Long> laguagesByNumberOfRepositories=webScraper
+									.getRepositories()
+									.stream()
+									.filter(repo -> repo instanceof ICodeRepository)
+									.map( ICodeRepository.class::cast )
+									.collect(Collectors.groupingBy(ICodeRepository::getProgrammingLanguage, Collectors.counting()));
 			
+	                
+			return laguagesByNumberOfRepositories;
+		}
 		
 	private void setDateRange(String since) {
 		if(since.equalsIgnoreCase("weekly")) {
