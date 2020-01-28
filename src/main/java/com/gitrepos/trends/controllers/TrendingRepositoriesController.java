@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -57,6 +58,34 @@ public class TrendingRepositoriesController {
 		return languages;
 	}
 	
+	// Get the number of repositories using a given language
+		@GetMapping(value = "/languages/{language}/count")
+		public ResponseEntity<Integer> countRepositoriesUsingLanguage(@RequestParam(defaultValue="") String since, @PathVariable String language) {
+			HttpHeaders headers = new HttpHeaders();
+			try {
+				setDateRange(since);
+				int numberOfReposUsingLanguage = countRepositoriesUsingLanguage(language);
+				
+		        headers.add("Message", "Number of repositories using the specified language");
+		        
+		        return ResponseEntity.accepted().headers(headers).body(numberOfReposUsingLanguage);
+			} catch (IOException e) {
+				headers.add("Message", "ERROR: can't get the number of repositories using the specified language");
+		        return ResponseEntity.accepted().headers(headers).body(null);
+			}
+		}
+
+		private int countRepositoriesUsingLanguage(String language) throws IOException {
+			int numberOfReposUsingLanguage = (int) webScraper
+									.getRepositories()
+									.stream()
+									.filter(repo->repo instanceof ICodeRepository)
+									.map(ICodeRepository.class::cast)
+									.filter(repo -> repo.getProgrammingLanguage().equalsIgnoreCase(language) )
+									.count();
+			return numberOfReposUsingLanguage;
+		}
+		
 		
 	private void setDateRange(String since) {
 		if(since.equalsIgnoreCase("weekly")) {
