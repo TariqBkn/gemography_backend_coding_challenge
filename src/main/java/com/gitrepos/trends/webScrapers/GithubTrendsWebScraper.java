@@ -7,18 +7,19 @@ import java.util.List;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.gitrepos.trends.IModels.IRepository;
 import com.gitrepos.trends.IModels.IRepositoryFactory;
-import com.gitrepos.trends.modelsImpl.GithubRepositoryFactory;
 
 @Component
 public class GithubTrendsWebScraper extends AbstractWebScraper {
 	
 	private final String GITHUB_URL="https://github.com/trending";
 	private DateRange dateRange=DateRange.DAILY;
-
+	@Autowired
+	IRepositoryFactory githubRepositoryFactory;
 	
 	@Override
 	protected void setUrl() {
@@ -36,7 +37,6 @@ public class GithubTrendsWebScraper extends AbstractWebScraper {
 		// This is the "Trending Repositories" web page on Github
 		final Document githubTrendingPage = Jsoup.connect(url).get();
 		
-		IRepositoryFactory githubRepositoryFactory = new GithubRepositoryFactory();
 		List<IRepository> extractedRepositories = new ArrayList<>();
 		
 		for (Element row : githubTrendingPage.select("article")) {

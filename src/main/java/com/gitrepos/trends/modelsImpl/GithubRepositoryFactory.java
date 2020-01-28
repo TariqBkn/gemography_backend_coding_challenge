@@ -1,8 +1,11 @@
 package com.gitrepos.trends.modelsImpl;
 
+import org.springframework.stereotype.Component;
+
 import com.gitrepos.trends.IModels.IRepository;
 import com.gitrepos.trends.IModels.IRepositoryFactory;
 
+@Component
 public class GithubRepositoryFactory implements IRepositoryFactory{
 
 	@Override
