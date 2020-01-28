@@ -1,8 +1,6 @@
-package com.gitrepos.trends.modelsImpl;
+package com.gitrepos.trends.models_impl;
 
-import java.util.Optional;
-
-import com.gitrepos.trends.IModels.ICodeRepository;
+import com.gitrepos.trends.abstract_models.ICodeRepository;
 
 // Contains code and plain Text
 public class GithubCodeRepository extends GithubPlainTextRepository implements ICodeRepository {

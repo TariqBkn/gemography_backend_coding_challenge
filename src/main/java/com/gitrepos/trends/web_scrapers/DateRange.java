@@ -1,4 +1,4 @@
-package com.gitrepos.trends.webScrapers;
+package com.gitrepos.trends.web_scrapers;
 /**
  * Helps change the date range of trending repositories
  * @author bkn_tariq
@@ -7,13 +7,13 @@ package com.gitrepos.trends.webScrapers;
 public enum DateRange {
 	DAILY(""), WEEKLY("weekly"), MONTHLY("monthly");
 	
-	private String dateRange;
+	private String dateRangeValue;
 	 
-    DateRange(String period) {
-        this.dateRange = period;
+    DateRange(String dateRangeValue) {
+        this.dateRangeValue = dateRangeValue;
     }
  
     public String getValue() {
-        return dateRange;
+        return dateRangeValue;
     }
 }

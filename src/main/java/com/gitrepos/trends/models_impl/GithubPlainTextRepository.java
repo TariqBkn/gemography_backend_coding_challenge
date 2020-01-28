@@ -1,6 +1,6 @@
-package com.gitrepos.trends.modelsImpl;
+package com.gitrepos.trends.models_impl;
 
-import com.gitrepos.trends.IModels.IRepository;
+import com.gitrepos.trends.abstract_models.IRepository;
 
 // A GitHub repository that contains plain text only
 public class GithubPlainTextRepository implements IRepository {

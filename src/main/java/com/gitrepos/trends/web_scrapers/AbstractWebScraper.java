@@ -1,13 +1,14 @@
-package com.gitrepos.trends.webScrapers;
+package com.gitrepos.trends.web_scrapers;
 
 import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.validator.routines.UrlValidator;
 
-import com.gitrepos.trends.IModels.IRepository;
+import com.gitrepos.trends.abstract_models.IRepository;
 /**
  * This class is responsible for getting trending repositories from a web page.
+ * It is abstract to allow different implementations
  * @author bkn_tariq
  */
 public abstract class AbstractWebScraper {

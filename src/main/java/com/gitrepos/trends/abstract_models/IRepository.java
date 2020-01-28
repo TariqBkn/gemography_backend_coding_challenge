@@ -1,4 +1,4 @@
-package com.gitrepos.trends.IModels;
+package com.gitrepos.trends.abstract_models;
 
 // This interface represents a repository that does not contain code, only a README.md file for example.
  // Example of such a repository : https://github.com/trimstray/the-book-of-secret-knowledge
