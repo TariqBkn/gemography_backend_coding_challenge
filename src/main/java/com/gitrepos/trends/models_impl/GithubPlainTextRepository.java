@@ -1,6 +1,6 @@
 package com.gitrepos.trends.models_impl;
 
-import com.gitrepos.trends.abstract_models.IRepository;
+import com.gitrepos.trends.models_abstract.IRepository;
 
 // A GitHub repository that contains plain text only
 public class GithubPlainTextRepository implements IRepository {
@@ -34,7 +34,7 @@ public class GithubPlainTextRepository implements IRepository {
 	}
 
 	@Override
-	public String getDescrition() {
+	public String getDescription() {
 		return description;
 	}
 	

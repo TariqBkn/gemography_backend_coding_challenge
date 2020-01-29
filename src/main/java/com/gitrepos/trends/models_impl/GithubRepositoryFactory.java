@@ -2,8 +2,8 @@ package com.gitrepos.trends.models_impl;
 
 import org.springframework.stereotype.Component;
 
-import com.gitrepos.trends.abstract_models.IRepository;
-import com.gitrepos.trends.abstract_models.IRepositoryFactory;
+import com.gitrepos.trends.models_abstract.IRepository;
+import com.gitrepos.trends.models_abstract.IRepositoryFactory;
 
 @Component
 public class GithubRepositoryFactory implements IRepositoryFactory{
@@ -11,7 +11,7 @@ public class GithubRepositoryFactory implements IRepositoryFactory{
 	@Override
 	public IRepository create(String repositoryName, String description, String programmingLanguage,
 			String totalStarsNumber, String starsNumberDuringSelectedDateRange) {
-		//strip string
+		//strip strings
 		repositoryName=repositoryName.strip();
 		description=description.isBlank()?"No description":description.strip();
 		programmingLanguage=programmingLanguage.strip();
@@ -22,13 +22,12 @@ public class GithubRepositoryFactory implements IRepositoryFactory{
 		int totalStarsNumberValue=Integer.parseInt(totalStarsNumber.replace(",", ""));
 		int starsNumberDuringSelectedDateRangeValue=Integer.parseInt(starsNumberDuringSelectedDateRange.replace(",", ""));
 		
-		if(programmingLanguage.equals("")) {
-			return new GithubPlainTextRepository(repositoryName, description,
+		//This repository is not related to a programming language, it is treated a PlainTextRepository
+		if(programmingLanguage.equals("")) return new GithubPlainTextRepository(repositoryName, description,
 			totalStarsNumberValue, starsNumberDuringSelectedDateRangeValue);
-		}else {
-			return new GithubCodeRepository(repositoryName, description,programmingLanguage,
-					totalStarsNumberValue, starsNumberDuringSelectedDateRangeValue);
-		}
+		
+		return new GithubCodeRepository(repositoryName, description,programmingLanguage,
+						totalStarsNumberValue, starsNumberDuringSelectedDateRangeValue);
 	}
 
 	
