@@ -1,4 +1,4 @@
-package com.gitrepos.trends.web_scrapers;
+package com.gitrepos.trends.models_impl;
 /**
  * Helps change the date range of trending repositories
  * @author bkn_tariq
