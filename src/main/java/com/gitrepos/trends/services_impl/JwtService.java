@@ -1,4 +1,4 @@
-package com.gitrepos.trends.config;
+package com.gitrepos.trends.services_impl;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -7,12 +7,14 @@ import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-public class JwtUtil {
+@Service
+public class JwtService {
 	public static final long JWT_TOKEN_VALIDITY = 2 * 60 * 60;
 	
 		@Value("${jwt.secretKey}")
