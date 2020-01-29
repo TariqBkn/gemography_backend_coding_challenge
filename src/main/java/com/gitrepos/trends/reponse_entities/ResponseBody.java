@@ -1,0 +1,19 @@
+package com.gitrepos.trends.reponse_entities;
+
+public class ResponseBody {
+    protected String message;
+    protected Object value;
+	public ResponseBody(String message,Object value) {
+		this.message = message;
+		this.value=value;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public Object getValue() {
+		return value;
+	}
+	
+	
+	
+}

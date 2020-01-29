@@ -110,7 +110,6 @@ public class GithubTrendsWebScraper extends AbstractRepositoriesScraper {
 		}
 	 	// Any other value will set DateRange to daily
 		this.setDateRange(DateRange.DAILY);
-		return;
 	}
 	 
 	
