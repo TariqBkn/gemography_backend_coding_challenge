@@ -4,7 +4,11 @@ import org.springframework.stereotype.Component;
 
 import com.gitrepos.trends.models_abstract.IRepository;
 import com.gitrepos.trends.models_abstract.IRepositoryFactory;
-
+/**
+ * builds an instance of GithubPlainTextRepository or GithubCodeRepository depending on whether the programming language is specified or not. 
+ * @author bkn_tariq
+ *
+ */
 @Component
 public class GithubRepositoryFactory implements IRepositoryFactory{
 
@@ -16,9 +20,10 @@ public class GithubRepositoryFactory implements IRepositoryFactory{
 		description=description.isBlank()?"No description":description.strip();
 		programmingLanguage=programmingLanguage.strip();
 		totalStarsNumber=totalStarsNumber.strip();
+		// turning "100 stars this week" into "100"
 		starsNumberDuringSelectedDateRange=starsNumberDuringSelectedDateRange.replace("stars", "").replace("today", "").replace("this","").replace("week","").replace("month","").strip();
 		
-		// On Github a thousand stars is written like : 1,000, it should become 1000
+		// On Github a thousand stars is written like : 1,000 it should become 1000
 		int totalStarsNumberValue=Integer.parseInt(totalStarsNumber.replace(",", ""));
 		int starsNumberDuringSelectedDateRangeValue=Integer.parseInt(starsNumberDuringSelectedDateRange.replace(",", ""));
 		

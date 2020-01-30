@@ -19,14 +19,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	 
 	@Autowired
 	JwtRequestFilter jwtRequestFilter;
+	
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new PasswordEncoder() {
 			
 			@Override
 			public boolean matches(CharSequence rawPassword, String encodedPassword) {
-				// TODO Auto-generated method stub
-				return rawPassword.equals(encodedPassword);
+ 				return rawPassword.equals(encodedPassword);
 			}
 			
 			@Override

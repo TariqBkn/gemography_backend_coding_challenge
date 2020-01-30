@@ -15,7 +15,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 public class JwtService {
-	public static final long JWT_TOKEN_VALIDITY = 2 * 60 * 60;
+	public static final long JWT_TOKEN_VALIDITY = 2 * 60 * 60l;
 	
 		@Value("${jwt.secretKey}")
 		private String secret;
@@ -51,8 +51,8 @@ public class JwtService {
 			return doGenerateToken(claims, userDetails.getUsername());
 		}
 	
-		// Generate JWT:
-		// Set  claims of the token
+		// Build JWT:
+		// Set  claims & subject of the token
 		// Sign the JWT using the HS512 algorithm and secret key.
 		private String doGenerateToken(Map<String, Object> claims, String subject) {
 	

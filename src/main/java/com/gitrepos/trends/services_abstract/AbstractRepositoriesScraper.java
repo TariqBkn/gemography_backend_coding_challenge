@@ -9,7 +9,7 @@ import org.apache.commons.validator.routines.UrlValidator;
 import com.gitrepos.trends.models_abstract.IRepository;
 import com.gitrepos.trends.models_impl.DateRange;
 /**
- * This class is responsible for getting trending repositories from a web page.
+ * This class is responsible for getting repositories from a web page.
  * It is abstract to allow different implementations
  * @author bkn_tariq
  */

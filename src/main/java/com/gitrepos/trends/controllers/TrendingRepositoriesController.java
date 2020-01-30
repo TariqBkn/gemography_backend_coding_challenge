@@ -15,14 +15,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gitrepos.trends.models_abstract.IRepository;
-import com.gitrepos.trends.reponse_entities.ResponseBody;
+import com.gitrepos.trends.response_helpers.ResponseBody;
 import com.gitrepos.trends.services_abstract.AbstractRepositoriesScraper;
 
 @RestController
 @RequestMapping(value="api/v1/repositories/trending")
 public class TrendingRepositoriesController {
 	
+	private static final String LANGUAGES_BY_POPULARITY = "Languages ranked by popularity (number of repositories using them)";
+	private static final String NUMBER_OF_REPOSITORIES_USING = "Number of repositories using ";
+	private static final String REPOSITORIES_USING = "Repositories using ";
+	private static final String LIST_OF_LANGUAGES = "List of languages used by the trending repositories";
+	
 	private final AbstractRepositoriesScraper webScraper;
+	
 	TrendingRepositoriesController(@Autowired AbstractRepositoriesScraper webScraper) {
 		this.webScraper=webScraper;
 	}
@@ -38,26 +44,11 @@ public class TrendingRepositoriesController {
 	        return ResponseEntity
 	        		.ok()
 	        		.body(
-	        			new ResponseBody("List of languages used by the trending repositories", languages)
+	        			new ResponseBody(LIST_OF_LANGUAGES, languages)
 	        			);
 		} catch (IOException e) {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		} 
-	}
-	 
-	// Get the number of repositories using a given language
-	@GetMapping(value = "/languages/{language}/count")
-	public ResponseEntity<ResponseBody> countRepositoriesUsingLanguage(@RequestParam(defaultValue="") String since, @PathVariable String language) {
- 		try {
-			webScraper.setDateRangeFromString(since);
-			long numberOfReposUsingLanguage = webScraper.countRepositoriesUsingLanguage(language);
-			
-	        return ResponseEntity.ok().body(
-	        							   new ResponseBody("Number of repositories using "+language, numberOfReposUsingLanguage ) 
-	        								);
-		} catch (IOException e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
 	}
 	
 	// List repositories using a given language
@@ -69,13 +60,28 @@ public class TrendingRepositoriesController {
 			List<IRepository> repositoriesUsingLanguage = webScraper.getRepositoriesUsingLanguage(language);
 	    
 	        return ResponseEntity.ok().headers(headers).body(
-	        												new ResponseBody("Repositories using "+language, repositoriesUsingLanguage)
+	        												new ResponseBody(REPOSITORIES_USING + language, repositoriesUsingLanguage)
 	        												);
 		} catch (IOException e) {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 	}
 
+	// Get the number of repositories using a given language
+	@GetMapping(value = "/languages/{language}/count")
+	public ResponseEntity<ResponseBody> countRepositoriesUsingLanguage(@RequestParam(defaultValue="") String since, @PathVariable String language) {
+ 		try {
+			webScraper.setDateRangeFromString(since);
+			long numberOfReposUsingLanguage = webScraper.countRepositoriesUsingLanguage(language);
+			
+	        return ResponseEntity.ok().body(
+	        							   new ResponseBody(NUMBER_OF_REPOSITORIES_USING + language, numberOfReposUsingLanguage ) 
+	        								);
+		} catch (IOException e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+	
 	// Get Language popularity over the 25 trending repositories
 	@GetMapping(value = "/languages/popularity")
 	public ResponseEntity<ResponseBody> getLanguagePopularity(@RequestParam(defaultValue="") String since) {
@@ -84,7 +90,7 @@ public class TrendingRepositoriesController {
 			Map<String, Long> laguagesByRank = webScraper.sortLanguagesByRepositories(webScraper.getLanguagesByNumberOfRepositories());
 
 	        return ResponseEntity.ok().body(
-	        							  new ResponseBody("Number of repositories using each language - ranked by popularity ", laguagesByRank)
+	        							  new ResponseBody(LANGUAGES_BY_POPULARITY, laguagesByRank)
 	        							  );
 		} catch (IOException e) {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

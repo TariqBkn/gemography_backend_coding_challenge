@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gitrepos.trends.models_impl.AuthenticationRequest;
+import com.gitrepos.trends.response_helpers.ResponseBody;
 import com.gitrepos.trends.services_impl.JwtService;
 import com.gitrepos.trends.services_impl.MyUserDetailsService;
-import com.gitrepos.trends.reponse_entities.ResponseBody;
+
 @RestController
 @RequestMapping("/api/v1/")
 public class AuthenticationController {
+	private static final String JWT_GENERATED = "Authenticated - JWT generated successfuly";
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	@Autowired
@@ -27,7 +29,7 @@ public class AuthenticationController {
 	private JwtService jwtService;
 	
 	@PostMapping("/authenticate")
-	public ResponseEntity<ResponseBody> authenticate(@RequestBody AuthenticationRequest authRequest) throws Exception {
+	public ResponseEntity<ResponseBody> authenticate(@RequestBody AuthenticationRequest authRequest) {
 		try {
 			authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
@@ -37,6 +39,6 @@ public class AuthenticationController {
 		}
 		final UserDetails userDetails = myUserDetailsService.loadUserByUsername(authRequest.getUsername());
 		final String jwt = jwtService.generateToken(userDetails);
-		return ResponseEntity.ok().body(new ResponseBody("Authenticated - JWT generated successfuly",jwt));
+		return ResponseEntity.ok().body(new ResponseBody(JWT_GENERATED,jwt));
 	}
 }

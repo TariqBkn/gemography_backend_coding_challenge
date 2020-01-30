@@ -2,7 +2,7 @@ package com.gitrepos.trends.models_impl;
 
 import com.gitrepos.trends.models_abstract.ICodeRepository;
 
-// Contains code and plain Text
+// Represents a GitHub repository that contains code and plain Text files
 public class GithubCodeRepository extends GithubPlainTextRepository implements ICodeRepository {
 	protected final String programmingLanguage;
 	

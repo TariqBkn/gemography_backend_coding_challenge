@@ -1,10 +1,11 @@
 package com.gitrepos.trends.models_impl;
 
 public class AuthenticationRequest {
+
 	private String username;
 	private String password;
 	
-	public void AuthenticateRequest() {
+	public AuthenticationRequest() {
 	}
 	
 	public AuthenticationRequest(String username, String password) {
