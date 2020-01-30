@@ -29,7 +29,8 @@ It was developed using [Spring Boot](https://spring.io/projects/spring-boot) and
 
 *   ## Routes :
 
-    After authenticating, the JWT should be added to the Authorization header after "Bearer " with every request.
+    After authenticating, the JWT should be added to the Authorization header after "Bearer " with every request to the endpoints below (all of them can be reached with GET requests):
+    
     1.  List the languages used by the 25 trending repositories:  
 
         <center>_localhost:8081/api/v1/repositories/trending/languages_</center>
