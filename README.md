@@ -20,7 +20,7 @@ It was developed using [Spring Boot](https://spring.io/projects/spring-boot) and
 
     _**localhost:_8081_/api/v1/authenticate**_
 
-    with the default user in the request body:
+    with the default user (foo ,bar) in the request body:
 
     _**{  
     "username":"foo",  
@@ -33,20 +33,26 @@ It was developed using [Spring Boot](https://spring.io/projects/spring-boot) and
     
     1.  List the languages used by the 25 trending repositories:  
 
-        <center>_localhost:8081/api/v1/repositories/trending/languages_</center>
+        <center>localhost:8081/api/v1/repositories/trending/languages</center>
 
     2.  Get the number of trending repositories using a language (case insensitive path variable):  
 
-        <center>_localhost:8081/api/v1/repositories/trending/languages/{language}/count_</center>
+        <center>localhost:8081/api/v1/repositories/trending/languages/{language}/count</center>
 
     3.  List the repositories using a language (case insensitive path variable):  
 
-        <center>_localhost:8081/api/v1/repositories/trending/languages/{language}_</center>
+        <center>localhost:8081/api/v1/repositories/trending/languages/{language}</center>
 
     4.  Language popularity over the 25 trending repositories:  
 
-        <center>_localhost:8081/api/v1/repositories/trending/languages/popularity_</center>
+        <center>localhost:8081/api/v1/repositories/trending/languages/popularity</center>
+    
+    You can also choose a date range (daily, monthly or weekly) within which repositories have been trending by giving the request parameter "since" a case insensitive value of "weekly", "monthly" for respectively a weekly, monthly date range. Any other value (or none at all) will set the date range to daily.
+    Here is an example of requesting language popularity over the trending repositories this month: 
+        
+       <center>localhost:8081/api/v1/repositories/trending/languages/popularity?since=monthly</center>
 
+    
 *   ## Responses :
 
     Responses for valid requests take the following form :
