@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,12 +37,8 @@ public class TrendingRepositoriesController {
 	public ResponseEntity<ResponseBody> listLanguesOfTrendingRepositories(@RequestParam(defaultValue="") String since) {
 		try {
 			webScraper.setDateRangeFromString(since);
-			
 			List<String> languages = webScraper.listLanguagesOfTrendingRepos();
-	
-	        return ResponseEntity
-	        		.ok()
-	        		.body(
+	        return ResponseEntity.ok().body(
 	        			new ResponseBody(LIST_OF_LANGUAGES, languages)
 	        			);
 		} catch (IOException e) {
@@ -54,14 +49,12 @@ public class TrendingRepositoriesController {
 	// List repositories using a given language
 	@GetMapping(value = "/languages/{language}")
 	public ResponseEntity<ResponseBody> listRepositoriesUsingLanguage(@RequestParam(defaultValue="") String since, @PathVariable String language) {
-		HttpHeaders headers = new HttpHeaders();
 		try {
 			webScraper.setDateRangeFromString(since);
 			List<IRepository> repositoriesUsingLanguage = webScraper.getRepositoriesUsingLanguage(language);
-	    
-	        return ResponseEntity.ok().headers(headers).body(
-	        												new ResponseBody(REPOSITORIES_USING + language, repositoriesUsingLanguage)
-	        												);
+	        return ResponseEntity.ok().body(
+	        			new ResponseBody(REPOSITORIES_USING + language, repositoriesUsingLanguage)
+	        			);
 		} catch (IOException e) {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
@@ -73,10 +66,9 @@ public class TrendingRepositoriesController {
  		try {
 			webScraper.setDateRangeFromString(since);
 			long numberOfReposUsingLanguage = webScraper.countRepositoriesUsingLanguage(language);
-			
 	        return ResponseEntity.ok().body(
-	        							   new ResponseBody(NUMBER_OF_REPOSITORIES_USING + language, numberOfReposUsingLanguage ) 
-	        								);
+	        			new ResponseBody(NUMBER_OF_REPOSITORIES_USING + language, numberOfReposUsingLanguage ) 
+	        			);
 		} catch (IOException e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
@@ -88,10 +80,9 @@ public class TrendingRepositoriesController {
 		try {
 			webScraper.setDateRangeFromString(since);
 			Map<String, Long> laguagesByRank = webScraper.sortLanguagesByRepositories(webScraper.getLanguagesByNumberOfRepositories());
-
 	        return ResponseEntity.ok().body(
-	        							  new ResponseBody(LANGUAGES_BY_POPULARITY, laguagesByRank)
-	        							  );
+	        			new ResponseBody(LANGUAGES_BY_POPULARITY, laguagesByRank)
+	        			);
 		} catch (IOException e) {
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
