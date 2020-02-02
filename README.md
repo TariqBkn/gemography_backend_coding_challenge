@@ -64,7 +64,7 @@ It was developed using [Spring Boot](https://spring.io/projects/spring-boot) and
 
 *   ## The missing features:
 
-    I expected the Github API to expose some endpoints of trending repositories but I didn't find any. So i decided to scrape the <a h="https://github.com/trending">trending repositories</a> from Github website instead of using the API. on this web page, no information is provided about frameworks, that is why I calculated programming languages popularity instead.
+    I expected the Github RESTful API to expose some endpoints of trending repositories but I didn't find any. So i decided to scrape the (trending repositories)[https://github.com/trending] instead of using the API. on this web page, no information is provided about frameworks, that is why I calculated programming languages popularity instead.
 
 # The author :
 
